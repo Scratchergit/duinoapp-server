@@ -6,16 +6,16 @@ RUN useradd duino
 RUN mkdir -p /mnt/duino-data
 RUN chmod 0777 /mnt/duino-data
 
-COPY setup /home/duino/setup
-COPY src/utils /home/duino/src/utils
-RUN chmod +x /home/duino/setup/*.sh
-# COPY Arduino /home/duino/Arduino
-
-# RUN mkdir /home/duino
-RUN chown duino:duino /home/duino -R
 RUN apt-get update && apt-get install build-essential python-pip python-serial python3-serial -y
 
 RUN pip install pyserial
+
+COPY setup /home/duino/setup
+COPY src/utils /home/duino/src/utils
+# COPY Arduino /home/duino/Arduino
+# RUN mkdir /home/duino
+RUN chmod +x /home/duino/setup/*.sh
+RUN chown duino:duino /home/duino -R
 
 WORKDIR /home/duino
 USER duino
