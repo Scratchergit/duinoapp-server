@@ -1,4 +1,4 @@
-FROM node:12-buster
+FROM node:20-bookworm
 
 USER root
 RUN useradd duino
@@ -6,9 +6,13 @@ RUN useradd duino
 RUN mkdir -p /mnt/duino-data
 RUN chmod 0777 /mnt/duino-data
 
-RUN apt-get update && apt-get install build-essential python-pip python-serial python3-serial -y
+RUN apt-get update && apt-get install build-essential python3-pip python3-serial python3-serial -y
 
-RUN pip install pyserial
+# RUN pip install pyserial
+
+# clean up apt
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/*
 
 COPY setup /home/duino/setup
 COPY src/utils /home/duino/src/utils
